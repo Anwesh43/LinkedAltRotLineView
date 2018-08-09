@@ -163,4 +163,27 @@ class AltRotLineView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : AltRotLineView) {
+
+        private val larl : LinkedARL = LinkedARL(0)
+
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            larl.draw(canvas, paint)
+            animator.animate {
+                larl.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            larl.startUpdating {
+                animator.stop()
+            }
+        }
+    }
 }
