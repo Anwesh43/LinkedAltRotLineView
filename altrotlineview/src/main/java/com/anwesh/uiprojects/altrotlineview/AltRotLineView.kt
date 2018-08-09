@@ -9,8 +9,24 @@ import android.view.MotionEvent
 import android.graphics.Paint
 import android.graphics.Canvas
 import android.content.Context
+import android.graphics.Color
 
 val nodes : Int = 5
+
+fun Canvas.drawARLNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = h / nodes
+    paint.strokeWidth = Math.min(w, h) / 60
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.color = Color.parseColor("#4CAF50")
+    val factor : Int = 1 - 2 * (i % 2)
+    save()
+    translate(w/2, gap * i + gap)
+    rotate(-90f * scale * factor)
+    drawLine(0f, 0f, gap * factor, 0f, paint)
+    restore()
+}
 
 class AltRotLineView(ctx : Context) : View(ctx) {
 
