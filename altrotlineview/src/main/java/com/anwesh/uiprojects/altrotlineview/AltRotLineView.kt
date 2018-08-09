@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.altrotlineview
  * Created by anweshmishra on 10/08/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Paint
@@ -186,6 +187,15 @@ class AltRotLineView(ctx : Context) : View(ctx) {
             larl.startUpdating {
                 animator.stop()
             }
+        }
+    }
+
+    companion object {
+
+        fun create(activity : Activity) : AltRotLineView {
+            val view : AltRotLineView = AltRotLineView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
