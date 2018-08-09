@@ -51,7 +51,7 @@ class AltRotLineView(ctx : Context) : View(ctx) {
     data class State(var scale : Float = 0f, var prevScale : Float = 0f, var dir : Float = 0f) {
 
         fun update(cb : (Float) -> Unit) {
-            scale += 0.01f * this.dir
+            scale += 0.1f * this.dir
             if (Math.abs(this.scale - this.prevScale) > 1) {
                 this.scale = this.prevScale + this.dir
                 this.dir = 0f
@@ -150,7 +150,7 @@ class AltRotLineView(ctx : Context) : View(ctx) {
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            curr.draw(canvas, paint)
+            root.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
@@ -185,7 +185,7 @@ class AltRotLineView(ctx : Context) : View(ctx) {
 
         fun handleTap() {
             larl.startUpdating {
-                animator.stop()
+                animator.start()
             }
         }
     }
