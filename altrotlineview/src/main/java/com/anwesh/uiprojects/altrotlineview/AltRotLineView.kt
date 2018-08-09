@@ -92,4 +92,49 @@ class AltRotLineView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class ARLNode(var i : Int, val state : State = State()) {
+
+        private var prev : ARLNode? = null
+
+        private var next : ARLNode? = null
+
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                next = ARLNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : ARLNode {
+            var curr : ARLNode? = this.prev
+            if (dir == 1) {
+                curr = this.next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawARLNode(i, state.scale, paint)
+            next?.draw(canvas, paint)
+        }
+    }
 }
